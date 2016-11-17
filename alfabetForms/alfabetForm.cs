@@ -29,7 +29,8 @@ namespace alfabetForms {
         where r.FormID == (string) Tag
         select r).SingleOrDefault();
 
-      bool BeingModified = (bool) ctrls.BeingModified;
+      bool BeingModified = false;
+      if (ctrls != null) BeingModified=(bool) ctrls.BeingModified;
 
       if (BeingModified && !timer1.Enabled)
       {
@@ -45,7 +46,7 @@ namespace alfabetForms {
         resetControls();
         formTitle =  Text;
         menuStrip1.Enabled = true;
-        loadControls();
+        if (ctrls != null) loadControls();
         Invalidate();
        timer1.Enabled = false;
       }
@@ -73,9 +74,11 @@ namespace alfabetForms {
     private void editToolStripMenuItem_Click(object sender, EventArgs e) {
       menuStrip1.BackColor = Color.LightGreen;
 
-      //drawRect(Color.Green);
-      ctrls.BeingModified = true;
-      db.SaveChanges();
+      if (ctrls != null) {
+        ctrls.BeingModified = true;
+        db.SaveChanges();
+      }
+    
 
       this.Text += " - Editing";
       editToolStripMenuItem.Enabled = false;
@@ -94,6 +97,7 @@ namespace alfabetForms {
 
     private void saveToolStripMenuItem_Click(object sender, EventArgs e) {
       controlsInfoStr = ControlMoverOrResizer.GetSizeAndPositionOfControlsToString(this);
+
       ctrls.Controls1 = controlsInfoStr;
       ctrls.BeingModified = false;
       db.SaveChanges();
