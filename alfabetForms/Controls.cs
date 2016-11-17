@@ -16,11 +16,6 @@ namespace alfabetForms
     {
         public int ID { get; set; }
         public string FormID { get; set; }
-        public string ControlID { get; set; }
-        public Nullable<int> PosX { get; set; }
-        public Nullable<int> PosY { get; set; }
-        public Nullable<int> Width { get; set; }
-        public Nullable<int> Height { get; set; }
         public string Controls1 { get; set; }
         public Nullable<bool> BeingModified { get; set; }
     }

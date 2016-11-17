@@ -1,10 +1,7 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Drawing;
 using System.Windows.Forms;
 using System.Linq;
-using System.Runtime.Remoting.Contexts;
-using System.Threading;
 
 namespace alfabetForms {
   public partial class alfabetForm : Form {
@@ -19,12 +16,12 @@ namespace alfabetForms {
 
     private void alfabetForm_Load(object sender, EventArgs e)
     {
-      //Guid g = Guid.NewGuid();
       formTitle = Text;
 
       checkForm( );
     }
 
+    //Check whether form is in ReadOnly mode or available for Editing
     private void checkForm( )
     {
        db= new dbEntities();
@@ -34,7 +31,7 @@ namespace alfabetForms {
 
       bool BeingModified = (bool) ctrls.BeingModified;
 
-      if (BeingModified )
+      if (BeingModified && !timer1.Enabled)
       {
         Text = formTitle+ " - ReadOnly";
         loadControls();
@@ -50,10 +47,11 @@ namespace alfabetForms {
         menuStrip1.Enabled = true;
         loadControls();
         Invalidate();
-      //  timer1.Enabled = false;
+       timer1.Enabled = false;
       }
     }
 
+    //Refresh form and load its controls from the database
     private void loadControls()
     {
       foreach (Control ctrl in Controls) {
@@ -132,6 +130,7 @@ namespace alfabetForms {
       ControlMoverOrResizer.Init(Controls[newCtrl]);
     }
 
+    // adding controls t othe form. TextBox and Button ctrls are avaialble
     private void addCtrl(String ctrlName, int posX= 100, int posY=100, int width=175,int height=30 ) {
       dynamic ctrl = null;
       if (ctrlName.ToLower().StartsWith("textbox"))
@@ -151,6 +150,7 @@ namespace alfabetForms {
       controlsInfoStr = ControlMoverOrResizer.GetSizeAndPositionOfControlsToString(this);
     }
 
+    //generate control name
     private string getNextCtrlName(String seed, int n=0)
     {
       String newName = seed + n;
@@ -165,6 +165,7 @@ namespace alfabetForms {
         return newName;
     }
 
+    //Check whether the form is enabled for editing
     private void timer1_Tick(object sender, EventArgs e) {
       checkForm( );
     }

@@ -6,11 +6,6 @@
     </Key>
     <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
     <Property Name="FormID" Type="varchar" MaxLength="50" />
-    <Property Name="ControlID" Type="varchar" MaxLength="50" />
-    <Property Name="PosX" Type="int" />
-    <Property Name="PosY" Type="int" />
-    <Property Name="Width" Type="int" />
-    <Property Name="Height" Type="int" />
     <Property Name="Controls" Type="varchar(max)" />
     <Property Name="BeingModified" Type="bit" />
   </EntityType>
